@@ -13,8 +13,3 @@ An efficient web-based Invoice Management System built with **Django**, designed
 - 📊 Dashboard with statistics
 - 💻 Responsive UI using Bootstrap
 
-## 📷 Screenshots
-
-> (Add your screenshots here using this format)
-```bash
-![Dashboard](screenshots/dashboard.png)

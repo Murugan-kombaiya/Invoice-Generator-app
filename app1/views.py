@@ -1,17 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.contrib.auth import login
 from django.db.models import Sum
 from django.forms import inlineformset_factory
-from django.contrib.auth.forms import UserCreationForm
 from decimal import Decimal, InvalidOperation
 
 from .models import Customer, Product, Invoice, InvoiceItem
 from .forms import CustomerForm, ProductForm, InvoiceForm, InvoiceItemForm
 
 # -------------------- Dashboard --------------------
-@login_required
+
 def dashboard(request):
     total_customers = Customer.objects.count()
     total_products = Product.objects.count()
@@ -41,12 +38,12 @@ def dashboard(request):
 
 
 # -------------------- Customer Views --------------------
-@login_required
+
 def customer_list(request):
     customers = Customer.objects.all()
     return render(request, "invoice_app/customer_list.html", {"customers": customers})
 
-@login_required
+
 def customer_create(request):
     if request.method == "POST":
         form = CustomerForm(request.POST)
@@ -57,7 +54,7 @@ def customer_create(request):
         form = CustomerForm()
     return render(request, "invoice_app/customer_form.html", {"form": form, "title": "Add Customer"})
 
-@login_required
+
 def customer_edit(request, pk):
     customer = get_object_or_404(Customer, pk=pk)
     if request.method == "POST":
@@ -69,7 +66,7 @@ def customer_edit(request, pk):
         form = CustomerForm(instance=customer)
     return render(request, "invoice_app/customer_form.html", {"form": form, "title": "Edit Customer"})
 
-@login_required
+
 def customer_delete(request, pk):
     customer = get_object_or_404(Customer, pk=pk)
     if request.method == "POST":
@@ -78,12 +75,12 @@ def customer_delete(request, pk):
     return render(request, "invoice_app/customer_confirm_delete.html", {"customer": customer})
 
 # -------------------- Product Views --------------------
-@login_required
+
 def product_list(request):
     products = Product.objects.all()
     return render(request, "invoice_app/product_list.html", {"products": products})
 
-@login_required
+
 def product_create(request):
     if request.method == "POST":
         form = ProductForm(request.POST)
@@ -94,7 +91,7 @@ def product_create(request):
         form = ProductForm()
     return render(request, "invoice_app/product_form.html", {"form": form, "title": "Add Product"})
 
-@login_required
+
 def product_edit(request, pk):
     product = get_object_or_404(Product, pk=pk)
     if request.method == "POST":
@@ -106,7 +103,7 @@ def product_edit(request, pk):
         form = ProductForm(instance=product)
     return render(request, "invoice_app/product_form.html", {"form": form, "title": "Edit Product"})
 
-@login_required
+
 def product_delete(request, pk):
     product = get_object_or_404(Product, pk=pk)
     if request.method == "POST":
@@ -115,12 +112,12 @@ def product_delete(request, pk):
     return render(request, "invoice_app/product_confirm_delete.html", {"product": product})
 
 # -------------------- Invoice Views --------------------
-@login_required
+
 def invoice_list(request):
     invoices = Invoice.objects.all()
     return render(request, "invoice_app/invoice_list.html", {"invoices": invoices})
 
-@login_required
+
 def create_invoice(request):
     InvoiceItemFormSet = inlineformset_factory(
         Invoice, InvoiceItem, form=InvoiceItemForm, extra=1, can_delete=False
@@ -170,7 +167,7 @@ def create_invoice(request):
     })
 
 
-@login_required
+
 def invoice_detail(request, pk):
     invoice = get_object_or_404(Invoice, pk=pk)
     items = invoice.items.all()

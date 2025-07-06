@@ -1,0 +1,8 @@
+{% extends "invoice_app/base.html" %} {% block content %}
+<h2>Delete {{ product.name }}?</h2>
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Yes, delete</button>
+  <a href="{% url 'product_list' %}">Cancel</a>
+</form>
+{% endblock %}

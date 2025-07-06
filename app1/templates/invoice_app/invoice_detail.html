@@ -1,0 +1,43 @@
+{% extends 'invoice_app/base.html' %}
+{% block title %}
+Invoice Detail
+{% endblock%} 
+{% block content %}
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header bg-info text-white">
+      <h4>Invoice #{{ invoice.id }}</h4>
+    </div>
+    <div class="card-body">
+      <p><strong>Customer:</strong> {{ invoice.customer.name }}</p>
+      <p><strong>Date:</strong> {{ invoice.date }}</p>
+      <p><strong>Status:</strong> {{ invoice.status }}</p>
+
+      <h5 class="mt-4">Items</h5>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Rate</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in items %}
+          <tr>
+            <td>{{ item.product.name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>₹{{ item.product.price }}</td>
+            <td>₹{{ item.item_total }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <hr />
+      <h5 class="text-end">Grand Total: ₹{{ invoice.total }}</h5>
+    </div>
+  </div>
+</div>
+{% endblock %}

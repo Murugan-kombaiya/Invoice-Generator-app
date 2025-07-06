@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Invoice #{{ invoice.id }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            margin: 40px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        .invoice-details {
+            margin-bottom: 20px;
+        }
+        .invoice-details p {
+            margin: 5px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            border: 1px solid #222;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .total-row td {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>🧾 Invoice #{{ invoice.id }}</h2>
+
+    <div class="invoice-details">
+        <p><strong>Customer:</strong> {{ invoice.customer.name }}</p>
+        <p><strong>Email:</strong> {{ invoice.customer.email }}</p>
+        <p><strong>Date:</strong> {{ invoice.date|date:"F d, Y" }}</p>
+        <p><strong>Status:</strong> {{ invoice.status }}</p>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>₹ {{ item.product.price }}</td>
+                <td>₹ {{ item.item_total }}</td>
+            </tr>
+            {% endfor %}
+            <tr class="total-row">
+                <td colspan="3" align="right">Total Amount:</td>
+                <td>₹ {{ invoice.total }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>

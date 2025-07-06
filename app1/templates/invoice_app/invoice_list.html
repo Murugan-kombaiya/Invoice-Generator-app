@@ -1,0 +1,68 @@
+{% extends 'invoice_app/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+Invoices
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+  <h2 class="mb-4 fw-bold text-primary text-center">📄 All Invoices</h2>
+
+  <!-- Create Invoice Button -->
+  <div class="text-end mb-3">
+    <a href="{% url 'create_invoice' %}" class="btn btn-primary">
+      <i class="bi bi-file-earmark-plus"></i> Create New Invoice
+    </a>
+  </div>
+
+  {% if invoices %}
+  <table class="table table-bordered table-striped">
+    <thead class="table-light">
+      <tr>
+        <th>ID</th>
+        <th>Customer</th>
+        <th>Total</th>
+        <th>Status</th>
+        <th>Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for invoice in invoices %}
+      <tr>
+        <td>{{ invoice.id }}</td>
+        <td>{{ invoice.customer.name }}</td>
+        <td>₹ {{ invoice.total }}</td>
+        <td>
+          {% if invoice.status == "Paid" %}
+          <span class="badge bg-success">Paid</span>
+          {% else %}
+          <span class="badge bg-danger">Unpaid</span>
+          {% endif %}
+        </td>
+        <td>{{ invoice.date|date:"M d, Y" }}</td>
+        <td>
+          <a
+            href="{% url 'invoice_detail' pk=invoice.id %}"
+            class="btn btn-info btn-sm"
+          >
+            <i class="bi bi-eye"></i> View
+          </a>
+          <a
+            href="{% url 'download_invoice_pdf' invoice_id=invoice.id %}"
+            class="btn btn-secondary btn-sm"
+          >
+            <i class="bi bi-download"></i> PDF
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p class="text-muted">No invoices available.</p>
+  {% endif %}
+</div>
+{% endblock %}

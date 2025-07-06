@@ -23,9 +23,9 @@ from app1 import views as app1_views
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("invoice/", include("app1.urls")),
-    path("login/", auth_views.LoginView.as_view(template_name="invoice_app/login.html"), name="login"),
-    path("logout/", auth_views.LogoutView.as_view(), name="logout"),
-    path("register/", app1_views.register, name="register"),
+    # path("login/", auth_views.LoginView.as_view(template_name="invoice_app/login.html"), name="login"),
+    # path("logout/", auth_views.LogoutView.as_view(), name="logout"),
+    # path("register/", app1_views.register, name="register"),
     path("", app1_views.dashboard, name="dashboard"),
 ] 
 

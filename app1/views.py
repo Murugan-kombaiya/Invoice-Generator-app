@@ -39,18 +39,6 @@ def dashboard(request):
     }
     return render(request, 'invoice_app/home.html', context)
 
-# -------------------- Register --------------------
-def register(request):
-    if request.method == "POST":
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            messages.success(request, "Registration successful!")
-            return redirect("dashboard")
-    else:
-        form = UserCreationForm()
-    return render(request, "invoice_app/register.html", {"form": form})
 
 # -------------------- Customer Views --------------------
 @login_required
